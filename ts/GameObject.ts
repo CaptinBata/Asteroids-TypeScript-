@@ -6,12 +6,12 @@ class GameObject extends Shape {
     protected speed: number;
 
     public Draw(context: CanvasRenderingContext2D) {
-        let x = this.position.X;
-        let y = this.position.Y;
-
         context.strokeStyle = "#ffffff";
-        super.DrawShape(x, y, context);
-        context.stroke();
+        super.DrawShape(context);
+    }
+
+    protected ApplyMovement() {
+        this.position = this.position.AddVec(this.directionVec.Multiply(this.speed));
     }
 }
 

@@ -34,6 +34,7 @@ var Game = /** @class */ (function () {
         this.asteroids.forEach(function (asteroid) {
             asteroid.Update(_this.canvas, _this.asteroids);
         });
+        this.keys = [];
     };
     Game.prototype.ClearScreen = function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -41,11 +42,10 @@ var Game = /** @class */ (function () {
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     };
     Game.prototype.Draw = function () {
-        var _this = this;
         this.ClearScreen();
-        //this.player.Draw(this.context);
+        this.player.Draw(this.context);
         this.asteroids.forEach(function (asteroid) {
-            asteroid.Draw(_this.context);
+            //     asteroid.Draw(this.context);
         });
     };
     Game.prototype.GameLoop = function () {

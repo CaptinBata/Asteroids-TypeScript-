@@ -10,10 +10,10 @@ class Shape {
         this.rotation = rotation;
     }
 
-    private RotatePoints() {
+    protected RotatePoints(points: Vector[]) {
         let radAngle = this.rotation * (Math.PI / 180);
         let rotated: Vector[] = [];
-        this.points.forEach(point => {
+        points.forEach(point => {
             let rotatedX = Math.cos(radAngle) * (point.X - 0) - Math.sin(radAngle) * (point.Y - 0) + 0;
             let rotatedY = Math.sin(radAngle) * (point.X - 0) + Math.cos(radAngle) * (point.Y - 0) + 0
 
@@ -23,15 +23,16 @@ class Shape {
         return rotated;
     }
 
-    protected DrawShape(x: number, y: number, context: CanvasRenderingContext2D) {
-        let rotatedPoints = this.RotatePoints();
+    protected DrawShape(context: CanvasRenderingContext2D) {
+        let rotatedPoints = this.RotatePoints(this.points);
 
         context.beginPath();
-        context.moveTo(x + rotatedPoints[0].X, y + rotatedPoints[0].Y);
+        context.moveTo(this.position.X + rotatedPoints[0].X, this.position.Y + rotatedPoints[0].Y);
         for (var nCount = 1; nCount < rotatedPoints.length; nCount++) {
-            context.lineTo(x + rotatedPoints[nCount].X, y + rotatedPoints[nCount].Y);
+            context.lineTo(this.position.X + rotatedPoints[nCount].X, this.position.Y + rotatedPoints[nCount].Y);
         }
         context.closePath();
+        context.stroke();
     }
 }
 

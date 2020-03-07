@@ -47,6 +47,7 @@ class Game {
         this.asteroids.forEach(asteroid => {
             asteroid.Update(this.canvas, this.asteroids);
         });
+        this.keys = [];
     }
 
     private ClearScreen() {
@@ -58,9 +59,9 @@ class Game {
     private Draw() {
         this.ClearScreen();
 
-        //this.player.Draw(this.context);
+        this.player.Draw(this.context);
         this.asteroids.forEach(asteroid => {
-            asteroid.Draw(this.context);
+            //     asteroid.Draw(this.context);
         });
     }
 

@@ -18,11 +18,11 @@ var GameObject = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     GameObject.prototype.Draw = function (context) {
-        var x = this.position.X;
-        var y = this.position.Y;
         context.strokeStyle = "#ffffff";
-        _super.prototype.DrawShape.call(this, x, y, context);
-        context.stroke();
+        _super.prototype.DrawShape.call(this, context);
+    };
+    GameObject.prototype.ApplyMovement = function () {
+        this.position = this.position.AddVec(this.directionVec.Multiply(this.speed));
     };
     return GameObject;
 }(Shape));

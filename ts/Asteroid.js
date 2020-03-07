@@ -103,8 +103,7 @@ var Asteroid = /** @class */ (function (_super) {
         }
         this.CheckOffScreenBoundary(canvas);
         this.rotation += 0.1 + ((30 - this.radius) * (0.1 / 30)); //turn based on size
-        this.position.X += this.directionVec.X * this.speed;
-        this.position.Y += this.directionVec.Y * this.speed;
+        this.ApplyMovement();
     };
     return Asteroid;
 }(GameObject));

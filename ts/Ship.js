@@ -19,6 +19,7 @@ var Ship = /** @class */ (function (_super) {
         if (directionVec === void 0) { directionVec = new Vector(0, 0); }
         if (speed === void 0) { speed = 0; }
         var _this = _super.call(this, position) || this;
+        _this.forwardVectors = [];
         _this.directionVec = directionVec;
         _this.speed = speed;
         _this.AddShapePoints();
@@ -29,16 +30,41 @@ var Ship = /** @class */ (function (_super) {
         this.points.push(new Vector(0, -24));
         this.points.push(new Vector(18, 24));
         this.points.push(new Vector(0, 18));
+        this.forwardVectors.push(new Vector(0, -24));
+        this.forwardVectors.push(new Vector(0, -25));
+    };
+    Ship.prototype.ApplyKeyInputs = function (keys) {
+        var _this = this;
+        var keysPressed = 0;
+        keys.forEach(function (key) {
+            keysPressed += 1;
+            switch (key) {
+                case 119:
+                    _this.speed += 0.5;
+                    if (_this.speed > 5)
+                        _this.speed = 5;
+                    _this.directionVec = _this.directionVec.AddVec(_this.forwardVector);
+                    _this.directionVec = _this.directionVec.Normalise();
+                    break;
+                case 97:
+                    _this.rotation -= 5;
+                    break;
+                case 100:
+                    _this.rotation += 5;
+                    break;
+            }
+        });
+        if (keysPressed == 0)
+            this.speed -= 0.5;
+    };
+    Ship.prototype.CalculateForwardVector = function () {
+        var rotatedVectors = this.RotatePoints(this.forwardVectors);
+        return rotatedVectors[0].SubtractVec(rotatedVectors[1]).Normalise();
     };
     Ship.prototype.Update = function (keys) {
-        this.position.Y -= 1;
-    };
-    Ship.prototype.Draw = function (context) {
-        var x = this.position.X;
-        var y = this.position.Y;
-        context.strokeStyle = "#ffffff";
-        _super.prototype.DrawShape.call(this, x, y, context);
-        context.stroke();
+        this.forwardVector = this.CalculateForwardVector();
+        this.ApplyKeyInputs(keys);
+        this.ApplyMovement();
     };
     return Ship;
 }(GameObject));

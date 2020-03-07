@@ -7,24 +7,25 @@ var Shape = /** @class */ (function () {
         ;
         this.rotation = rotation;
     }
-    Shape.prototype.RotatePoints = function () {
+    Shape.prototype.RotatePoints = function (points) {
         var radAngle = this.rotation * (Math.PI / 180);
         var rotated = [];
-        this.points.forEach(function (point) {
+        points.forEach(function (point) {
             var rotatedX = Math.cos(radAngle) * (point.X - 0) - Math.sin(radAngle) * (point.Y - 0) + 0;
             var rotatedY = Math.sin(radAngle) * (point.X - 0) + Math.cos(radAngle) * (point.Y - 0) + 0;
             rotated.push(new Vector(rotatedX, rotatedY));
         });
         return rotated;
     };
-    Shape.prototype.DrawShape = function (x, y, context) {
-        var rotatedPoints = this.RotatePoints();
+    Shape.prototype.DrawShape = function (context) {
+        var rotatedPoints = this.RotatePoints(this.points);
         context.beginPath();
-        context.moveTo(x + rotatedPoints[0].X, y + rotatedPoints[0].Y);
+        context.moveTo(this.position.X + rotatedPoints[0].X, this.position.Y + rotatedPoints[0].Y);
         for (var nCount = 1; nCount < rotatedPoints.length; nCount++) {
-            context.lineTo(x + rotatedPoints[nCount].X, y + rotatedPoints[nCount].Y);
+            context.lineTo(this.position.X + rotatedPoints[nCount].X, this.position.Y + rotatedPoints[nCount].Y);
         }
         context.closePath();
+        context.stroke();
     };
     return Shape;
 }());
