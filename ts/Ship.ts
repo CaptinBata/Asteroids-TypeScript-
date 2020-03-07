@@ -47,20 +47,23 @@ class Ship extends GameObject {
         });
 
         if (keysPressed == 0)
-            this.speed -= 0.5;
+            if (this.speed > 0)
+                this.speed -= 0.01;
     }
 
     private CalculateForwardVector() {
         let rotatedVectors = this.RotatePoints(this.forwardVectors);
-        return rotatedVectors[0].SubtractVec(rotatedVectors[1]).Normalise();
+        return rotatedVectors[1].SubtractVec(rotatedVectors[0]).Normalise();
     }
 
-    public Update(keys: number[]) {
+    public Update(keys: number[], canvas: HTMLCanvasElement) {
         this.forwardVector = this.CalculateForwardVector();
 
         this.ApplyKeyInputs(keys);
 
         this.ApplyMovement();
+
+        this.CheckOffScreenBoundary(canvas);
     }
 }
 

@@ -41,18 +41,6 @@ class Asteroid extends GameObject {
         this.points = newPoints;
     }
 
-    private CheckOffScreenBoundary(canvas: HTMLCanvasElement) {
-        if (this.position.X > canvas.width)
-            this.position.X = 0;
-        if (this.position.X < 0)
-            this.position.X = canvas.width;
-
-        if (this.position.Y > canvas.height)
-            this.position.Y = 0;
-        if (this.position.Y < 0)
-            this.position.Y = canvas.height;
-    }
-
     private CheckCollisions(asteroid: Asteroid) {
         let centeredX = this.position.X - asteroid.position.X;
         let centeredY = this.position.Y - asteroid.position.Y;

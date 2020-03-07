@@ -6,13 +6,16 @@ var Game = /** @class */ (function () {
     function Game() {
         this.keys = [];
         this.asteroids = [];
+        this.SetupCanvas();
+        this.keys = new Array();
+        this.ClearScreen();
+    }
+    Game.prototype.SetupCanvas = function () {
         this.canvas = document.getElementById("gameCanvas");
         this.canvas.width = this.GetWindowWidth();
         this.canvas.height = this.GetWindowHeight();
         this.context = this.canvas.getContext("2d");
-        this.keys = new Array();
-        this.ClearScreen();
-    }
+    };
     Game.prototype.GetCirclePoints = function (radius, pointCount) {
         var incDegrees = 360 / pointCount;
         var points = [];
@@ -27,7 +30,7 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.Update = function () {
         var _this = this;
-        this.player.Update(this.keys);
+        this.player.Update(this.keys, this.canvas);
         this.asteroids.forEach(function (asteroid) {
             asteroid.Bounced = false;
         });
@@ -77,6 +80,9 @@ var Game = /** @class */ (function () {
         var _this = this;
         window.addEventListener("keypress", function (e) {
             _this.keys.push(e.keyCode);
+        });
+        window.addEventListener("resize", function (e) {
+            _this.SetupCanvas();
         });
     };
     return Game;

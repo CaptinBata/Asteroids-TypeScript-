@@ -55,16 +55,18 @@ var Ship = /** @class */ (function (_super) {
             }
         });
         if (keysPressed == 0)
-            this.speed -= 0.5;
+            if (this.speed > 0)
+                this.speed -= 0.01;
     };
     Ship.prototype.CalculateForwardVector = function () {
         var rotatedVectors = this.RotatePoints(this.forwardVectors);
-        return rotatedVectors[0].SubtractVec(rotatedVectors[1]).Normalise();
+        return rotatedVectors[1].SubtractVec(rotatedVectors[0]).Normalise();
     };
-    Ship.prototype.Update = function (keys) {
+    Ship.prototype.Update = function (keys, canvas) {
         this.forwardVector = this.CalculateForwardVector();
         this.ApplyKeyInputs(keys);
         this.ApplyMovement();
+        this.CheckOffScreenBoundary(canvas);
     };
     return Ship;
 }(GameObject));

@@ -11,14 +11,19 @@ class Game {
     private player: Ship;
 
     constructor() {
+        this.SetupCanvas();
+
+        this.keys = new Array<number>();
+
+        this.ClearScreen();
+    }
+
+    private SetupCanvas() {
         this.canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
         this.canvas.width = this.GetWindowWidth();
         this.canvas.height = this.GetWindowHeight();
 
         this.context = this.canvas.getContext("2d");
-        this.keys = new Array<number>();
-
-        this.ClearScreen();
     }
 
     private GetCirclePoints(radius: number, pointCount: number) {
@@ -38,7 +43,7 @@ class Game {
     }
 
     private Update() {
-        this.player.Update(this.keys);
+        this.player.Update(this.keys, this.canvas);
 
         this.asteroids.forEach(asteroid => {
             asteroid.Bounced = false;
@@ -108,6 +113,9 @@ class Game {
     private SetUpEvents() {
         window.addEventListener("keypress", (e) => {
             this.keys.push(e.keyCode);
+        });
+        window.addEventListener("resize", (e) => {
+            this.SetupCanvas();
         });
     }
 }

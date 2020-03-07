@@ -13,6 +13,19 @@ class GameObject extends Shape {
     protected ApplyMovement() {
         this.position = this.position.AddVec(this.directionVec.Multiply(this.speed));
     }
+
+
+    protected CheckOffScreenBoundary(canvas: HTMLCanvasElement) {
+        if (this.position.X > canvas.width)
+            this.position.X = 0;
+        if (this.position.X < 0)
+            this.position.X = canvas.width;
+
+        if (this.position.Y > canvas.height)
+            this.position.Y = 0;
+        if (this.position.Y < 0)
+            this.position.Y = canvas.height;
+    }
 }
 
 export { GameObject }

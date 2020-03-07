@@ -52,16 +52,6 @@ var Asteroid = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Asteroid.prototype.CheckOffScreenBoundary = function (canvas) {
-        if (this.position.X > canvas.width)
-            this.position.X = 0;
-        if (this.position.X < 0)
-            this.position.X = canvas.width;
-        if (this.position.Y > canvas.height)
-            this.position.Y = 0;
-        if (this.position.Y < 0)
-            this.position.Y = canvas.height;
-    };
     Asteroid.prototype.CheckCollisions = function (asteroid) {
         var centeredX = this.position.X - asteroid.position.X;
         var centeredY = this.position.Y - asteroid.position.Y;
